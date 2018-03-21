@@ -1,0 +1,11 @@
+{
+  "name": "scorp",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "jsmidgen": "^0.1.5",
+    "pegjs": "^0.10.0",
+    "scribbletune": "^0.11.2"
+  }
+}
