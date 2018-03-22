@@ -1,0 +1,27 @@
+tempo = 120
+length = 32
+
+bass1 = c2
+bass2 = b1
+hit1 = f1
+congo1 = g2
+congo2 = c3
+congo3 = d3
+congo4 = a2
+crash1 = e3
+cymbal1 = _e1
+cymbal2 = _g1
+clink1 = c4
+clink2 = a5
+crush1 = c1
+crush2 = d1
+crush3 = c#1
+crush4 = db1
+chirp1 = db5
+chirp2 = f5
+
+patt1 => { x-x- }
+
+patt1(chirp1) * 2
+
+{ x x - x - x x } (crush2)

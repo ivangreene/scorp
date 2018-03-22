@@ -9,12 +9,30 @@
     }, []);
   }
 
+  function parseFn(body) {
+    return body.join('%%%').replace(/%%% /g, '').replace(/([,`~])%%%/g, '$1');
+  }
+
+  function execFn(fn, args) {
+    let i = 0;
+    return fn.replace(/x/g, function() {
+      return args[i++ % args.length];
+    }).split('%%%');
+  }
+
+
   var runtimeVars = {};
-  var metaVars = {};
+  var metaVars = {
+    tempo: 120,
+    vfactor: 10,
+    lengthstep: 16,
+    velocity: 90,
+    length: 32
+  };
 }
 
 start
-  = join
+  = notes:join { return { notes, metaVars }; }
 
 join // Concatenate notes or units with whitespace between them
   = left:repeat __ right:join _ { return [...left, ...right]; }
@@ -70,14 +88,15 @@ retrieval
 
 fncall
   = id:identifier "(" _ args:(join / unit) _ ")" {
-      let i = 0;
-      return runtimeVars[id].replace(/x/g, function() {
-        return args[i++ % args.length];
-      }).split('%%%');
+      return execFn(runtimeVars[id], args);
     }
 
+  / "{" _ body:([-x ,`~;_]+) _ "}" _ "(" _ args:(join / unit) _ ")" {
+    return execFn(parseFn(body), args);
+  }
+
 assignment
-  = _ id:("velocity" / "vfactor" / "tempo") _ "=" _ value:integer {
+  = _ id:("velocity" / "vfactor" / "lengthstep" / "tempo" / "length") _ "=" _ value:integer {
     metaVars[id] = value;
     console.log(metaVars);
     return true;
@@ -99,9 +118,7 @@ assignment
   }
 
 fnbody
-  = "{" _ body:([-x ,`~]+) _ "}" {
-    return body.join('%%%').replace(/%%% /g, '').replace(/([,`~])%%%/g, '$1');
-  }
+  = "{" _ body:([-x ,`~;_]+) _ "}" { return parseFn(body); }
 
 identifier "identifier"
   = id:([a-zA-Z]+[0-9a-zA-Z]*) ![0-9a-zA-Z] { return str(id); }

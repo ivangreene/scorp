@@ -1,0 +1,44 @@
+tempo = 210
+velocity = 60
+vfactor = 20
+length = 32
+lengthstep = 16
+
+bass1 = c2
+bass2 = b1
+hit1 = f1
+congo1 = g2
+congo2 = c3
+congo3 = d3
+congo4 = a2
+crash1 = e3
+cymbal1 = _e1
+cymbal2 = _g1
+clink1 = c4
+clink2 = a5
+crush1 = c1
+crush2 = d1
+crush3 = c#1
+crush4 = db1
+chirp1 = db5
+chirp2 = f5
+
+pattern1 => { xxxx }
+pattern2 => { x-xx }
+pattern3 => { -xxx }
+
+,__pattern1(bass1 crash1) * 4
+
+_(
+  pattern2(congo4 ;congo1 congo3)
+  ;pattern3(congo1)
+  pattern2(congo4 ;bass1 congo3)
+  ;pattern3(congo1)
+) * 4
+
+// pattern1(congo2 congo1)
+
+// (
+//   pattern1(bass1 clink1)
+//   pattern2(bass1 * 2 clink1)
+// ) * 4
