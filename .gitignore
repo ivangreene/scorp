@@ -62,3 +62,6 @@ typings/
 
 # Generated midi files
 examples/*.midi
+
+# vim swp files
+*.swp
