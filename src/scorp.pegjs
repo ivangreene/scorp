@@ -10,7 +10,7 @@
   }
 
   function parseFn(body) {
-    return /*body.join('%%%')*/ body.replace(/%%% /g,
+    return /*body.join('%%%')*/ body.replace(/%%%\s/g,
       '').replace(/([,`~_;])%%%/g, '$1');
   }
 
@@ -102,7 +102,7 @@ fncall "function call"
   }
 
 fnbody "function body"
-  = "{" _ body:([-x ,`~;_]+) _ "}" { return parseFn(body.join('%%%')); }
+  = "{" _ body:([-x ,`~;_0-9\n\t\r]+) _ "}" { return parseFn(body.join('%%%')); }
 
 metavar
   = "velocity" / "vfactor" / "lengthstep" / "tempo" / "length"
