@@ -33,7 +33,11 @@
 }
 
 start
-  = notes:join { return { notes, metaVars: runtimeVars }; }
+  = groups:groups { return { groups, metaVars: runtimeVars }; }
+
+groups
+  = left:join _ "==" _ right:groups _ { return [left, ...right]; }
+  / join:join { return [join]; }
 
 join
   = left:repeat __ right:join _ { return [...left, ...right]; }
